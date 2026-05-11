@@ -16,7 +16,14 @@ pio.templates.default = "plotly_white"
 
 
 def fig_html(fig, full=False) -> str:
-    return pio.to_html(fig, include_plotlyjs="cdn" if full else False, full_html=False)
+    fig.update_layout(autosize=True, margin=dict(l=10, r=10, t=50, b=40))
+    return pio.to_html(
+        fig,
+        include_plotlyjs="cdn" if full else False,
+        full_html=False,
+        default_width="100%",
+        config={"responsive": True, "displaylogo": False},
+    )
 
 
 def main() -> None:
@@ -129,7 +136,9 @@ def main() -> None:
   .kpi .v {{ font-size: 26px; font-weight: 700; color: #4f46e5; }}
   .kpi .l {{ font-size: 13px; color: #6b7280; margin-top: 4px; }}
   .grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(520px, 1fr)); gap: 16px; padding: 0 24px 32px; }}
-  .card {{ background: white; border-radius: 10px; padding: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }}
+  .card {{ background: white; border-radius: 10px; padding: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); overflow: hidden; min-width: 0; }}
+  .card > div {{ width: 100% !important; }}
+  .js-plotly-plot, .plotly, .plot-container {{ width: 100% !important; }}
   footer {{ text-align: center; padding: 24px; color: #6b7280; font-size: 13px; }}
 </style>
 </head>
